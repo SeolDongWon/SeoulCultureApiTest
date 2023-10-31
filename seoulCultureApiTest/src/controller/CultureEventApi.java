@@ -37,6 +37,9 @@ public class CultureEventApi {
 		fIS = new FileInputStream("src/seoulApiTest.properties");
 		properties.load(fIS);
 		String seoulEncoding = properties.getProperty("seoulEncoding");
+		if (seoulEncoding.equals("sample")) {
+			System.out.printf("\n sample인증키 사용중 \n 최대 레코드 5개 제한 \n");
+		}
 
 		StringBuilder urlSB = new StringBuilder("http://openapi.seoul.go.kr:8088");
 		urlSB.append("/" + URLEncoder.encode(seoulEncoding, "UTF-8"));
@@ -157,6 +160,7 @@ public class CultureEventApi {
 		for (CultureEventVO d : list) {
 			System.out.println(d);
 		}
+		bufRead.close();
 		return list;
 	}
 

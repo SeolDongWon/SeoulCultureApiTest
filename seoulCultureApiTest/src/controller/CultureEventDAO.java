@@ -3,7 +3,6 @@ package controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import model.CultureEventVO;
 
@@ -79,26 +78,16 @@ public class CultureEventDAO {
 	}
 
 	// 데이터 검색하기
-	public void searchDataDAO(StringBuilder searchEventSB, CultureEventVO cEVO, ArrayList<String> aList)
-			throws Exception {
+	public void searchDataDAO(String searchEvent, CultureEventVO cEVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		con = DBcon.getConnection();
-		pstmt = con.prepareStatement(searchEventSB.toString());
-
-		if (aList != null) {
-			if (cEVO.getCODENAME() != null) {
-				pstmt.setNString(aList.indexOf("CODENAME") + 1, "%" + cEVO.getCODENAME() + "%");
-			}
-			if (cEVO.getGUNAME() != null) {
-				pstmt.setNString(aList.indexOf("GUNAME") + 1, "%" + cEVO.getGUNAME() + "%");
-			}
-			if (cEVO.getTITLE() != null) {
-				pstmt.setNString(aList.indexOf("TITLE") + 1, "%" + cEVO.getTITLE() + "%");
-			}
-		}
+		pstmt = con.prepareStatement(searchEvent);
+		pstmt.setNString(1, "%" + cEVO.getCODENAME() + "%");
+		pstmt.setNString(2, "%" + cEVO.getGUNAME() + "%");
+		pstmt.setNString(3, "%" + cEVO.getTITLE() + "%");
 
 		rs = pstmt.executeQuery();
 
@@ -111,12 +100,14 @@ public class CultureEventDAO {
 					rs.getString("EVENTDATE"), rs.getString("PLACE"), rs.getString("TITLE"));
 		}
 
+		System.out.printf("\n %s \n", searchEvent);
 		int cnt = pstmt.executeUpdate();
 		if (cnt >= 1) {
 			System.out.println("쿼리 성공");
 		} else {
 			System.out.println("쿼리 실패");
 		}
+
 		if (pstmt != null) {
 			pstmt.close();
 		}

@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,13 +32,11 @@ public class CultureEventController {
 		int selectMenu = 0;
 		String keyWord = null;
 		boolean stopFlag = false;
-		boolean firstSearchFlag = false;
-		ArrayList<String> aList = new ArrayList<String>();
 
-		StringBuilder searchEventSB = new StringBuilder("select * from culturalEventInfo");
-		String searchName = "CODENAME";
-//		StringBuilder searchEventSB = new StringBuilder(
-//				"select * from culturalEventInfo where " + searchName + " like ? ");
+		String searchCODENAME = " 1 ";
+		String searchGUNAME = " 1 ";
+		String searchTITLEE = " 1 ";
+
 		System.out.println("검색대상을 선택안하면 전체보기");
 
 		while (!stopFlag) {
@@ -48,17 +45,14 @@ public class CultureEventController {
 			selectMenu = scan.nextInt();
 			scan.nextLine();
 
+			
+			
+			
+			
 			if (selectMenu == 0) {
 				break;
 			} else if (selectMenu < 0 || 4 < selectMenu) {
 				continue;
-			}
-
-			if (firstSearchFlag == false) {
-				searchEventSB.append(" where ");
-				firstSearchFlag = true;
-			} else {
-				searchEventSB.append(" and ");
 			}
 
 			System.out.println("검색 키워드 입력");
@@ -66,31 +60,24 @@ public class CultureEventController {
 
 			switch (selectMenu) {
 			case 1:
-				searchEventSB.append(" CODENAME like ? ");
-				aList.add("CODENAME");
+				searchCODENAME = "CODENAME";
 				cEVO.setCODENAME(keyWord);
 				break;
 			case 2:
-				searchEventSB.append(" GUNAME like ? ");
-				aList.add("GUNAME");
+				searchGUNAME = "GUNAME";
 				cEVO.setGUNAME(keyWord);
 				break;
 			case 3:
-				searchEventSB.append(" TITLE like ? ");
-				aList.add("TITLE");
+				searchTITLEE = "TITLE";
 				cEVO.setTITLE(keyWord);
-				break;
-			case 4:
-				searchEventSB.append(" EVENTDATE like ? ");
-				cEVO.setEVENTDATE(keyWord);
 				break;
 			default:
 			}
-
 		}
-		System.out.println(aList);
-		System.out.println(searchEventSB);
-		cEDAO.searchDataDAO(searchEventSB, cEVO, aList);
+		String searchEvent = "select * from culturalEventInfo where " + searchCODENAME + " like ? and " + searchGUNAME
+				+ " like ? and " + searchTITLEE + " like ? ";
+
+		cEDAO.searchDataDAO(searchEvent, cEVO);
 	}
 
 }
