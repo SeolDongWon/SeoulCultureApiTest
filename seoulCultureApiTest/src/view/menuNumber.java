@@ -1,6 +1,6 @@
 package view;
 
-public class MENU_MAIN {
+public class menuNumber {
 
 	public static final int EXIT = 0;
 	public static final int IMPORT_DATA = 1;

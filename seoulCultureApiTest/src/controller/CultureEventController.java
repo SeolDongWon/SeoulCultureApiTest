@@ -45,10 +45,6 @@ public class CultureEventController {
 			selectMenu = scan.nextInt();
 			scan.nextLine();
 
-			
-			
-			
-			
 			if (selectMenu == 0) {
 				break;
 			} else if (selectMenu < 0 || 4 < selectMenu) {
@@ -79,5 +75,4 @@ public class CultureEventController {
 
 		cEDAO.searchDataDAO(searchEvent, cEVO);
 	}
-
 }

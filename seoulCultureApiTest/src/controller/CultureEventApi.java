@@ -56,7 +56,6 @@ public class CultureEventApi {
 		conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
-//		conn.setRequestProperty("Content-type", "application/xml");
 		System.out.println("Response code:" + conn.getResponseCode());
 
 		// 3. 요청 전송 및 응답처리
